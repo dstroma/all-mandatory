@@ -1,4 +1,4 @@
-package all;
+package all::mandatory;
 
 use 5.006;
 use strict;
@@ -7,7 +7,7 @@ use warnings;
 use File::Spec ();
 use File::Find ();
 
-our $VERSION = 0.51_01;
+our $VERSION = 0.01;
 
 sub import {
   my $class = shift;
@@ -16,18 +16,19 @@ sub import {
   if ($of ne 'of') {
     unshift @$args, $of;
   }
-  my $caller  = caller();
   foreach my $arg (@$args) {
     my $modules = _find_modules( $arg );
+
+    @$modules
+      or die "all::mandatory - No modules under $arg namespace exist";
+
     foreach my $module (@$modules) {
       my $package = $module->{ module };
       eval {
-	require $module->{ path };
-	$package->import;
-      };
-      if ($@) {
-	warn( $@ );
-      }
+        require $module->{ path };
+        $package->import;
+        1;
+      } or die "all::mandatory - Could not load module $module->{path}:\n$@\n";
     }
   }
   1;
@@ -85,33 +86,23 @@ __END__
 
 =head1 NAME
 
-all - Load all packages under a namespace
+all::mandatory - Load all packages under a namespace, but
+die instead of warn if a module fails to load.
 
 =head1 SYNOPSIS
 
   # use everything in the IO:: namespace
-  use all of => 'IO::*';
-  use all 'IO::*';
+  use all::mandatory of => 'IO::*';
+  use all::mandatory 'IO::*';
 
   # use everything in the IO:: and Sys:: namespaces
-  use all 'IO::*', 'Sys::*';
-  use all of => qw{IO::* Sys::*};
+  use all::mandatory 'IO::*', 'Sys::*';
+  use all::mandatory of => qw{IO::* Sys::*};
 
 =head1 DESCRIPTION
 
-With the all pragma you can load multiple modules that share the same root
-namespace.  This vastly reduces the amount of times you need to spend use'ing
-modules.
-
-=head1 BUGS / FEATURES
-
-=over 4
-
-=item *
-
-This will remove the ability to use exported / optionally exported functions.
-
-=back
+Duplicate of the 'all' CPAN module, but will die if a module
+cannot be loaded, or if no modules under a namespace can be found.
 
 =head1 AUTHOR
 
@@ -119,11 +110,15 @@ James A. Duncan <jduncan@fotango.com>
 
 Piotr Roszatycki <dexter@cpan.org>
 
+Dondi Michael Stroma <dstroma@gmail.com>
+
 =head1 LICENSE
 
 Copyright 2003 Fotango Ltd. All Rights Reserved.
 
 Copyright 2008 Piotr Roszatycki <dexter@cpan.org>.
+
+Copyright 2025 Dondi Michael Stroma <dstroma@gmail.com>.
 
 This module is released under the same terms as Perl itself.
 

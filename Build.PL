@@ -3,7 +3,7 @@
 use Module::Build;
 
 my $build = new Module::Build(
-    module_name => 'all',
+    module_name => 'all::mandatory',
     license     => 'perl',
     requires    => {
         'perl'       => 5.006,
@@ -14,7 +14,7 @@ my $build = new Module::Build(
     add_to_cleanup     => [
         'META.yml', '*.bak', '*.gz', '*.tgz', '*.ppd', '*.deb', '*.bat',
         'Makefile.PL', 'Makefile', 'pm_to_blib', 'cover_db',
-        'all-*',
+        'all-*', 'mandatory-*',
     ],
 );
 

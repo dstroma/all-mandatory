@@ -3,8 +3,8 @@ require 5.006;
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-          'NAME' => 'all',
-          'VERSION_FROM' => 'lib/all.pm',
+          'NAME' => 'all::mandatory',
+          'VERSION_FROM' => 'lib/all/mandatory.pm',
           'PREREQ_PM' => {
                            'File::Find' => 0,
                            'File::Spec' => 0

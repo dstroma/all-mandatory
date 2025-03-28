@@ -1,31 +1,33 @@
 NAME
-    all - pragma to load all packages under a namespace
+    all::mandatory - Load all packages under a namespace, but die instead of
+    warn if a module fails to load.
 
 SYNOPSIS
       # use everything in the IO:: namespace
-      use all of => 'IO::*';
-      use all 'IO::*';
+      use all::mandatory of => 'IO::*';
+      use all::mandatory 'IO::*';
 
       # use everything in the IO:: and Sys:: namespaces
-      use all 'IO::*', 'Sys::*';
-      use all of => qw{IO::* Sys::*};
+      use all::mandatory 'IO::*', 'Sys::*';
+      use all::mandatory of => qw{IO::* Sys::*};
 
 DESCRIPTION
-    With the all pragma you can load multiple modules that share the same
-    root namespace. This vastly reduces the amount of times you need to
-    spend use'ing modules.
-
-BUGS / FEATURES
-    *   This will remove the ability to use exported / optionally exported
-        functions.
+    Duplicate of the 'all' CPAN module, but will die if a module cannot be
+    loaded, or if no modules under a namespace can be found.
 
 AUTHOR
     James A. Duncan <jduncan@fotango.com>
 
-COPYRIGHT
+    Piotr Roszatycki <dexter@cpan.org>
+
+    Dondi Michael Stroma <dstroma@gmail.com>
+
+LICENSE
     Copyright 2003 Fotango Ltd. All Rights Reserved.
 
     Copyright 2008 Piotr Roszatycki <dexter@cpan.org>.
+
+    Copyright 2025 Dondi Michael Stroma <dstroma@gmail.com>.
 
     This module is released under the same terms as Perl itself.
 

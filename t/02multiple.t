@@ -21,19 +21,19 @@ $SIG{__WARN__} = sub { local $Carp::CarpLevel = 1; Carp::confess("Warning: ", @_
 use Test::More tests => 13;
 
 eval q{
-  use all 'all::Test1::', 'all::Test2::*';
+  use all::mandatory 'all::mandatory::Test1::', 'all::mandatory::Test2::*';
 };
 
-is( $@,                         '',    'use all' );
-is( all::Test1->VERSION,        undef, 'all::Test1 is not loaded' );
-is( all::Test1::Test1->VERSION, 11,    'all::Test1::Test1 is loaded' );
-is( all::Test1::Test2->VERSION, 12,    'all::Test1::Test2 is loaded' );
-is( all::Test1::Test3->VERSION, 13,    'all::Test1::Test3 is loaded' );
-is( all::Test2->VERSION,        undef, 'all::Test2 is not loaded' );
-is( all::Test2::Test1->VERSION, 21,    'all::Test2::Test1 is loaded' );
-is( all::Test2::Test2->VERSION, 22,    'all::Test2::Test2 is loaded' );
-is( all::Test2::Test3->VERSION, 23,    'all::Test2::Test3 is loaded' );
-is( all::Test3->VERSION,        undef, 'all::Test3 is not loaded' );
-is( all::Test3::Test1->VERSION, undef, 'all::Test3::Test1 is not loaded' );
-is( all::Test3::Test2->VERSION, undef, 'all::Test3::Test2 is not loaded' );
-is( all::Test3::Test3->VERSION, undef, 'all::Test3::Test3 is not loaded' );
+is( $@,                         '',    'use all::mandatory' );
+is( all::mandatory::Test1->VERSION,        undef, 'all::mandatory::Test1 is not loaded' );
+is( all::mandatory::Test1::Test1->VERSION, 11,    'all::mandatory::Test1::Test1 is loaded' );
+is( all::mandatory::Test1::Test2->VERSION, 12,    'all::mandatory::Test1::Test2 is loaded' );
+is( all::mandatory::Test1::Test3->VERSION, 13,    'all::mandatory::Test1::Test3 is loaded' );
+is( all::mandatory::Test2->VERSION,        undef, 'all::mandatory::Test2 is not loaded' );
+is( all::mandatory::Test2::Test1->VERSION, 21,    'all::mandatory::Test2::Test1 is loaded' );
+is( all::mandatory::Test2::Test2->VERSION, 22,    'all::mandatory::Test2::Test2 is loaded' );
+is( all::mandatory::Test2::Test3->VERSION, 23,    'all::mandatory::Test2::Test3 is loaded' );
+is( all::mandatory::Test3->VERSION,        undef, 'all::mandatory::Test3 is not loaded' );
+is( all::mandatory::Test3::Test1->VERSION, undef, 'all::mandatory::Test3::Test1 is not loaded' );
+is( all::mandatory::Test3::Test2->VERSION, undef, 'all::mandatory::Test3::Test2 is not loaded' );
+is( all::mandatory::Test3::Test3->VERSION, undef, 'all::mandatory::Test3::Test3 is not loaded' );
